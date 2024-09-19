@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         setListener()
+        startShell()
     }
 
     private fun setListener() {
@@ -119,6 +120,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startShell() {
+        mBound = isServiceRunning(ShellService::class.java)
+        if (mBound) {
+            return
+        }
         val intent = Intent(this, ShellService::class.java)
         intent.putExtra("filename", BuildConfig.FrpcFileName)
         startService(intent)
